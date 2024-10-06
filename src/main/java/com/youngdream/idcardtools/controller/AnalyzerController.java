@@ -1,8 +1,9 @@
 package com.youngdream.idcardtools.controller;
 
+import com.youngdream.idcardtools.common.Const;
+import com.youngdream.idcardtools.common.Toast;
 import com.youngdream.idcardtools.service.AnalyzerService;
 import com.youngdream.idcardtools.utils.IdCardUtil;
-import com.youngdream.idcardtools.utils.Toast;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,50 +20,35 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * 分析器，视图控制器类
+ * IdCard解析，视图控制器类
  *
  * @author YoungDream
  */
 public class AnalyzerController implements Initializable {
-
-    /**
-     * 身份证输入框
-     */
     @FXML
     public TextField idCardField;
 
-    /**
-     * 解析按钮
-     */
     @FXML
     public Button analyzerBtn;
 
-    /**
-     * 响应结果文本域
-     */
     @FXML
     public TextArea resultArea;
 
-    /**
-     * 复制按钮
-     */
     @FXML
     public Button copyBtn;
-    /**
-     * 重置按钮
-     */
+
     @FXML
     public Button resetBtn;
 
-    private AnalyzerService analyzerService = new AnalyzerService();
+    private final AnalyzerService analyzerService = new AnalyzerService();
 
     /**
      * 初始化
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        idCardField.setText("");
-        resultArea.setText("");
+        idCardField.setText(Const.EMPTY_STR);
+        resultArea.setText(Const.EMPTY_STR);
     }
 
     /**
@@ -72,14 +58,14 @@ public class AnalyzerController implements Initializable {
         resultArea.clear();
         String idCard = idCardField.getText().toUpperCase();
         if (IdCardUtil.isEmpty(idCard)) {
-            Toast.warning((Stage) idCardField.getScene().getWindow(),"请填写身份证");
+            Toast.warning("请填写身份证");
         } else {
             //解析身份证
             if (IdCardUtil.checkIdCard(idCard)) {
-                Toast.success((Stage) idCardField.getScene().getWindow(),"验证通过");
-                resultArea.setText(analyzerService.getIdCardInfo(idCard));
+                Toast.success("验证通过");
+                resultArea.setText(analyzerService.getIdCardInfoStr(idCard));
             } else {
-                Toast.error((Stage) idCardField.getScene().getWindow(),"验证失败");
+                Toast.error("验证未通过，此身份证号不符合标准");
             }
         }
     }
@@ -94,7 +80,7 @@ public class AnalyzerController implements Initializable {
         //长度校验18位，超过自动截取
         if (idCard.length() > 18) {
             String temp = idCard.substring(0, 18);
-            Toast.warning((Stage) idCardField.getScene().getWindow(),"长度不能超过18位");
+            Toast.warning("长度不能超过18位");
             idCardField.setText(temp);
             idCardField.positionCaret(temp.length());
             return;
@@ -105,21 +91,22 @@ public class AnalyzerController implements Initializable {
         }
     }
 
-    public void copyHandle(ActionEvent actionEvent) {
-        if (IdCardUtil.isNotEmpty(resultArea.getText())){
+    public void copyHandle(ActionEvent event) {
+        if (IdCardUtil.isNotEmpty(resultArea.getText())) {
             Clipboard clipboard = Clipboard.getSystemClipboard();
             ClipboardContent content = new ClipboardContent();
             content.putString(resultArea.getText());
             clipboard.setContent(content);
-            Toast.success((Stage) idCardField.getScene().getWindow(),"已复制到剪切板");
+            Toast.success("已复制到剪切板");
         } else {
-            Toast.warning((Stage) idCardField.getScene().getWindow(),"没有解析的数据");
+            Toast.warning("没有解析的数据");
         }
     }
 
-    public void resetHandle(ActionEvent actionEvent) {
-        idCardField.setText("");
-        resultArea.setText("");
-        Toast.success((Stage) idCardField.getScene().getWindow(),"重置成功");
+    public void resetHandle(ActionEvent event) {
+        idCardField.setText(Const.EMPTY_STR);
+        resultArea.setText(Const.EMPTY_STR);
+        Toast.success("重置成功");
     }
+
 }

@@ -14,9 +14,11 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.421-b09, mixed mode)
 
 
 ### 截图
-![img.png](doc/img.png)
+![img_2.png](doc/img/img_2.png)
 
-![img_1.png](doc/img_1.png)
+![img_3.png](doc/img/img_3.png)
+
+![img_4.png](doc/img/img_4.png)
 
 ## 功能支持：
 
@@ -46,9 +48,9 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.421-b09, mixed mode)
 + [x] 解析时处理未匹配到行政区划的，应当向上级匹配
 + [x] 年龄计算超100或小于零的问题
 + [x] 整理idcard工具类
-+ [ ] 窗口置顶
-+ [ ] 系统托盘
-+ [ ] 批量解析支持导入txt/csv，导出txt/csv/json格式文件
++ [x] 窗口置顶
++ [x] 系统托盘
++ [x] 批量解析支持导入txt/csv文件，导出支持txt/csv/json格式文件
 + [ ] ~~整理历年行政区划代码，校验区划码~~
 
 ## 原理

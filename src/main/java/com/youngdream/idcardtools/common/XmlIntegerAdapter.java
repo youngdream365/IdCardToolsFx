@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * @author YoungDream
  */
 public class XmlIntegerAdapter extends XmlAdapter<String, Integer> {
-
     @Override
     public Integer unmarshal(String v) {
         if (v == null || v.length() == 0) {
@@ -19,6 +18,7 @@ public class XmlIntegerAdapter extends XmlAdapter<String, Integer> {
 
     @Override
     public String marshal(Integer v) {
-        return v == null ? "" : String.valueOf(v);
+        return v == null ? Const.EMPTY_STR : String.valueOf(v);
     }
 }
+

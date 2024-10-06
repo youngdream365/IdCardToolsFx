@@ -8,15 +8,14 @@ import javafx.util.StringConverter;
  *
  * @author YoungDream
  */
-public class AreaStringConverter<T> extends StringConverter<T> {
+public class AreaStringConverter extends StringConverter<Area> {
     @Override
-    public String toString(Object object) {
-        Area s = (Area) object;
-        return s.getName();
+    public String toString(Area area) {
+        return (area == null) ? Const.EMPTY_STR : area.getName();
     }
 
     @Override
-    public T fromString(String string) {
-        return null;
+    public Area fromString(String string) {
+        throw new UnsupportedOperationException("fromString method is not supported.");
     }
 }

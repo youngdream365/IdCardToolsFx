@@ -20,6 +20,9 @@ import java.util.logging.Logger;
 public class XmlUtil {
     private static final Logger LOGGER = Logger.getLogger(XmlUtil.class.getName());
 
+    private XmlUtil() {
+    }
+
     /**
      * 加载xml文件为InputStream
      */
@@ -65,8 +68,7 @@ public class XmlUtil {
     }
 
     /**
-     * @desc obj->xml (Marshaller)
-     * @author YoungDream
+     * obj->xml (Marshaller)
      */
     public static <T> void obj2Xml(Object jaxbObject, OutputStream xml) throws JAXBException {
         Class<?> cazz = jaxbObject.getClass();
@@ -82,8 +84,7 @@ public class XmlUtil {
     }
 
     /**
-     * @desc xml->obj (Unmarshaller)
-     * @author YoungDream
+     * xml->obj (Unmarshaller)
      */
     public static <T> T xml2Obj(InputStream xml, Class<T> type) throws JAXBException {
         // 获取JAXB的上下文环境，并注册对象类
@@ -93,4 +94,5 @@ public class XmlUtil {
         // 将XML数据序列化，返回值为Object需要强转类型
         return (T) unmarshaller.unmarshal(xml);
     }
+
 }

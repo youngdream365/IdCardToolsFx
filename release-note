@@ -1,3 +1,15 @@
+v0.2.0
+1.Support window on-top;
+2.Support system tray;
+3.import txt/csv files and export txt/csv/json files for batch analysing;
+4.Improved Toast messages and fixed other bugs;
+1.新增了窗口置顶功能；
+2.新增了系统托盘功能；
+3.批量解析支持导入txt/csv文件，导出支持txt/csv/json格式文件；
+4.优化了Toast气泡消息，修改了其他bug；
+
 v0.1.1
-1.基础版本搭建
-2.实现号码生成/解析基本功能
+1.Build the basic version;
+2.Implement the basic feature of idcard generation and idcard analyse;
+1.基础版本搭建；
+2.实现号码生成/解析基本功能；

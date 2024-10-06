@@ -5,11 +5,11 @@ import com.youngdream.idcardtools.entity.Area;
 import java.time.LocalDate;
 
 /**
- * 身份证构建, Builder
+ * 身份证号码构建候选实体, Builder
  *
  * @author YoungDream
  */
-public class ParamBuilder {
+public class IdcardCandidate {
     /**
      * 省/自治区/直辖市
      */
@@ -50,18 +50,72 @@ public class ParamBuilder {
      */
     private Integer quantity;
 
-    @Override
-    public String toString() {
-        return "ParamBuilder{" +
-                "province=" + province +
-                ", city=" + city +
-                ", district=" + district +
-                ", birth=" + birth +
-                ", birthFrom=" + birthFrom +
-                ", birthTo=" + birthTo +
-                ", gender=" + gender +
-                ", quantity=" + quantity +
-                '}';
+    private IdcardCandidate(Builder builder) {
+        this.province = builder.province;
+        this.city = builder.city;
+        this.district = builder.district;
+        this.birth = builder.birth;
+        this.birthFrom = builder.birthFrom;
+        this.birthTo = builder.birthTo;
+        this.gender = builder.gender;
+        this.quantity = builder.quantity;
+    }
+
+    // Builder 静态内部类
+    public static class Builder {
+        private Area province;
+        private Area city;
+        private Area district;
+        private LocalDate birth;
+        private LocalDate birthFrom;
+        private LocalDate birthTo;
+        private Integer gender;
+        private Integer quantity;
+
+        public Builder province(Area province) {
+            this.province = province;
+            return this;
+        }
+
+        public Builder city(Area city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder district(Area district) {
+            this.district = district;
+            return this;
+        }
+
+        public Builder birth(LocalDate birth) {
+            this.birth = birth;
+            return this;
+        }
+
+        public Builder birthFrom(LocalDate birthFrom) {
+            this.birthFrom = birthFrom;
+            return this;
+        }
+
+        public Builder birthTo(LocalDate birthTo) {
+            this.birthTo = birthTo;
+            return this;
+        }
+
+        public Builder gender(Integer gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public Builder quantity(Integer quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public IdcardCandidate build() {
+            return new IdcardCandidate(this);
+        }
+
     }
 
     public Area getProvince() {
@@ -128,43 +182,4 @@ public class ParamBuilder {
         this.quantity = quantity;
     }
 
-    public ParamBuilder province(Area province) {
-        this.province = province;
-        return this;
-    }
-
-    public ParamBuilder city(Area city) {
-        this.city = city;
-        return this;
-    }
-
-    public ParamBuilder district(Area district) {
-        this.district = district;
-        return this;
-    }
-
-    public ParamBuilder birth(LocalDate birth) {
-        this.birth = birth;
-        return this;
-    }
-
-    public ParamBuilder gender(Integer gender) {
-        this.gender = gender;
-        return this;
-    }
-
-    public ParamBuilder quantity(Integer quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public ParamBuilder birthFrom(LocalDate birthFrom) {
-        this.birthFrom = birthFrom;
-        return this;
-    }
-
-    public ParamBuilder birthTo(LocalDate birthTo) {
-        this.birthTo = birthTo;
-        return this;
-    }
 }

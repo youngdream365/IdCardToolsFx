@@ -17,6 +17,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.421-b09, mixed mode)
 **Notice: This project is only used for JavaFx GUI learning, don't use for illegal purposes. Otherwise the user assumes legal responsibility, has nothing to do with the developer.**
 
 ## Screenshot
-![img.png](doc/img.png)
+![img_2.png](doc/img/img_2.png)
 
-![img_1.png](doc/img_1.png)
+![img_3.png](doc/img/img_3.png)
+
+![img_4.png](doc/img/img_4.png)

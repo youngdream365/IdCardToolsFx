@@ -1,5 +1,44 @@
 .root {
-    -fx-background-color: #f4f4f4;
+    -fx-background-color: rgba(244, 244, 244, 0)
+}
+
+.center-content {
+    -fx-border-color: #00786c;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+
+/*标题栏*/
+.title-box {
+    -fx-background-color: #009688;
+    -fx-padding: 5px;
+}
+
+/*标题按钮*/
+.btn-title {
+    -fx-min-width: 16px;
+    -fx-min-height: 16px;
+    -fx-background-color: transparent;
+}
+
+.btn-title:hover {
+    -fx-background-color: rgba(244, 244, 244, 0.5);
+}
+
+.btn-title:pressed {
+    -fx-text-fill: #333333;
+}
+
+/*关闭窗口按钮*/
+.btn-title-close {
+    -fx-min-width: 16px;
+    -fx-min-height: 16px;
+    -fx-background-color: transparent;
+}
+
+.btn-title-close:hover {
+    -fx-background-color: rgba(255, 0, 0, 0.8);
 }
 
 /*设置tab背景颜色*/
@@ -107,6 +146,7 @@
     -fx-disable: false;
 }
 
+/*下拉选项*/
 .com-box {
     -fx-border-color: #eeeeee;
     -fx-background-color: #ffffff;
@@ -115,7 +155,31 @@
 
 .com-box:hover {
     -fx-border-color: #5fb878;
-    /*-fx-border-radius: 3px;*/
+}
+
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #5fb878; /* 修改选中项的背景颜色 */
+    -fx-text-fill: white; /* 修改选中项的文本颜色 */
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #D3D3D3; /* 鼠标悬停时的背景颜色 */
+}
+
+/*复选框*/
+.checkbox {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c2c2c2;
+    -fx-border-radius: 50;
+}
+
+.checkbox:hover {
+    -fx-text-fill: #5fb878;
+    -fx-border-color: #5fb878;
+}
+
+.checkbox:default {
+    -fx-text-fill: #0000aa;
 }
 
 .radio {

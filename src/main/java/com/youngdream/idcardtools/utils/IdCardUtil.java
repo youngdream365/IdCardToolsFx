@@ -1,7 +1,10 @@
 package com.youngdream.idcardtools.utils;
 
+import com.youngdream.idcardtools.common.Const;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
@@ -10,23 +13,18 @@ import java.util.Random;
  *
  * @author YoungDream
  * <p>
- * 参照《GB11643-1999》实现；
+ * 参照《GB11643-1999》实现；日期相关计算简便起见采用格里高利历。
  * 当前使用的行政区划数据来源于：“中华人民共和国民政部”官网
  * <a href="http://www.mca.gov.cn/article/sj/xzqh/1980/202105/20210500033655.shtml">2020年中华人民共和国行政区划代码</a>
  */
 public class IdCardUtil {
-    /**
-     * 采用格里高利历（四年一闰，百年不闰，四百年再闰）
-     * 年：[1-9][0-9]{3},
-     * 大月1，3，5，7，8，10，12，
-     * 小月2，4，6，9，11（平二月28天，闰二月29天）
-     */
-    public static final String DATE_LEAP_YEAR_PATTERN = "^([0-9]{4})(((01|03|05|07|08|10|12)((0[1-9])|([1|2][0-9])|(3[0|1])))|((04|06|09|11)((0[1-9])|([1|2][0-9])|30))|(02((0[1-9])|(1[0-9])|(2[0-9]))))$";
-    public static final String DATE_NONLEAP_YEAR_PATTERN = "^([0-9]{4})(((01|03|05|07|08|10|12)((0[1-9])|([1|2][0-9])|(3[0|1])))|((04|06|09|11)((0[1-9])|([1|2][0-9])|30))|(02((0[1-9])|(1[0-9])|(2[0-8]))))$";
 
     private IdCardUtil() {
     }
 
+    /**
+     * 检查是否符合规范
+     */
     public static boolean checkIdCard(String idCard) {
         if (checkG1(idCard)) {
             idCard = g1ToG2(idCard);
@@ -49,7 +47,7 @@ public class IdCardUtil {
             return false;
         } else {
             String birthDate = "19" + idCard.substring(6, 12);
-            return checkDate(birthDate);
+            return isValidDate(birthDate);
         }
     }
 
@@ -66,7 +64,7 @@ public class IdCardUtil {
             return false;
         } else {
             String birthDate = idCard.substring(6, 14);
-            return checkDate(birthDate) && checkBit(idCard);
+            return isValidDate(birthDate) && checkBit(idCard);
         }
     }
 
@@ -81,26 +79,43 @@ public class IdCardUtil {
     }
 
     /**
-     * 验证日期
-     * 合法(true)，非法(false)
+     * 获取二代身份证号码
      */
-    public static boolean checkDate(String yyyyMMdd) {
-        if (isEmpty(yyyyMMdd) || !yyyyMMdd.matches("^[0-9]{8}$")) {
-            return false;
+    public static String getG2IdCard(String idCard) {
+        if (checkG2(idCard)) {
+            return idCard.toUpperCase();
         }
-        int year = Integer.parseInt(yyyyMMdd.substring(0, 4));
-        return isLeapYear(year) ? yyyyMMdd.matches(DATE_LEAP_YEAR_PATTERN) : yyyyMMdd.matches(DATE_NONLEAP_YEAR_PATTERN);
+        return checkG1(idCard) ? g1ToG2(idCard): Const.EMPTY_STR;
     }
 
     /**
-     * 验证性别
-     * 男(true)，女(false)
+     * 验证日期
+     * 合法(true)，非法(false)
+     */
+    public static boolean isValidDate(String dateStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        try {
+            LocalDate.parse(dateStr, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    public static LocalDate birthday(String idCard) {
+        if (checkG1(idCard))
+            idCard = g1ToG2(idCard);
+        return LocalDate.of(
+                Integer.parseInt(idCard.substring(6, 10)),
+                Integer.parseInt(idCard.substring(10, 12)),
+                Integer.parseInt(idCard.substring(12, 14)));
+    }
+
+    /**
+     * 验证性别：男(true)，女(false)
      */
     public static boolean checkGender(String idCard) {
-        if (checkG1(idCard)) {
-            idCard = g1ToG2(idCard);
-        }
-        int in = Integer.parseInt(idCard.substring(15, 17));
+        int in = Integer.parseInt(getG2IdCard(idCard).substring(16, 17));
         return isOdd(in);
     }
 
@@ -129,77 +144,50 @@ public class IdCardUtil {
     /**
      * 根据年月日获取生肖,属相
      */
-    public static String getChineseZodiac(String dateStr) {
+    public static String getChineseZodiac(String idCard) {
         String[] str = {"鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"};
-        int year = Integer.parseInt(dateStr.substring(0, 4));
+        int year = Integer.parseInt(idCard.substring(6, 10));
         return str[(year - 4) % 12];
     }
 
     /**
      * 根据月日获取星座
      */
-    public static String getZodiac(String MMdd) {
-        String monthAndDay = MMdd.substring(4, 8);
+    public static String getZodiacSign(String idCard) {
+        LocalDate date = LocalDate.parse(idCard.substring(6, 14), DateTimeFormatter.ofPattern("yyyyMMdd"));
+        int month = date.getMonthValue();
+        int day = date.getDayOfMonth();
         String zodiac = "";
-        if (monthAndDay.matches("(01((2[0-9])|(3[0|1])))|(02((0[1-9])|(1[0-8])))")) {
-            //水瓶座0120-0218
-            zodiac = "水瓶座(01月20日-02月18日)";
-        } else if (monthAndDay.matches("(02(19|(2[0-9])|(3[0|1])))|(03((0[1-9])|(1[0-9])|20))")) {
-            //双鱼座0219-0320
-            zodiac = "双鱼座(02月19日-03月20日)";
-        } else if (monthAndDay.matches("(03((2[1-9])|(3[0|1])))|(04((0[1-9])|(1[0-9])))")) {
-            //白羊座0321-0419
-            zodiac = "白羊座(03月21日-04月19日)";
-        } else if (monthAndDay.matches("(04((2[0-9])|(3[0|1])))|(05((0[1-9])|(1[0-9])|20))")) {
-            //金牛座0420-0520
-            zodiac = "金牛座(04月20日-05月20日)";
-        } else if (monthAndDay.matches("(05((2[1-9])|(3[0|1])))|(06((0[1-9])|(1[0-9])|(2[0-1])))")) {
-            //双子座0521-0621
-            zodiac = "双子座(05月21日-06月21日)";
-        } else if (monthAndDay.matches("(06((2[2-9])|(3[0|1])))|(07((0[1-9])|(1[0-9])|(2[0-2])))")) {
-            //巨蟹座0622-0722
-            zodiac = "巨蟹座(06月22日-07月22日)";
-        } else if (monthAndDay.matches("(07((2[3-9])|(3[0|1])))|(08((0[1-9])|(1[0-9])|(2[0-2])))")) {
-            //狮子座0723-0822
-            zodiac = "狮子座(07月23日-08月22日)";
-        } else if (monthAndDay.matches("(08((2[3-9])|(3[0|1])))|(09((0[1-9])|(1[0-9])|(2[0-2])))")) {
-            //处女座0823-0922
-            zodiac = "处女座(08月23日-09月22日)";
-        } else if (monthAndDay.matches("(09((2[3-9])|(3[0|1])))|(10((0[1-9])|(1[0-9])|(2[0-3])))")) {
-            //天秤座0923-1023
-            zodiac = "天秤座(09月23日-10月23日)";
-        } else if (monthAndDay.matches("(10((2[4-9])|(3[0|1])))|(11((0[1-9])|(1[0-9])|(2[0-2])))")) {
-            //天蝎座1024-1122
-            zodiac = "天蝎座(10月24日-11月22日)";
-        } else if (monthAndDay.matches("(11((2[3-9])|(3[0|1])))|(12((0[1-9])|(1[0-9])|(2[0-1])))")) {
-            //射手座1123-1221
-            zodiac = "射手座(11月23日-12月21日)";
-        } else if (monthAndDay.matches("(12((2[2-9])|(3[0|1])))|(01((0[1-9])|(1[0-9])))")) {
-            //摩羯座1222-0119
-            zodiac = "摩羯座(12月22日-01月19日)";
+        if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) {
+            zodiac = "水瓶座";
+        } else if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) {
+            zodiac = "双鱼座";
+        } else if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
+            zodiac = "白羊座";
+        } else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
+            zodiac = "金牛座";
+        } else if ((month == 5 && day >= 21) || (month == 6 && day <= 21)) {
+            zodiac = "双子座";
+        } else if ((month == 6 && day >= 22) || (month == 7 && day <= 22)) {
+            zodiac = "巨蟹座";
+        } else if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) {
+            zodiac = "狮子座";
+        } else if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) {
+            zodiac = "处女座";
+        } else if ((month == 9 && day >= 23) || (month == 10 && day <= 23)) {
+            zodiac = "天秤座";
+        } else if ((month == 10 && day >= 24) || (month == 11 && day <= 22)) {
+            zodiac = "天蝎座";
+        } else if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
+            zodiac = "射手座";
+        } else if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) {
+            zodiac = "摩羯座";
         }
         return zodiac;
     }
 
     /**
-     * 获取区间内随机日期，内部做了比较交换
-     */
-    public static String randomDate(LocalDate form, LocalDate to) {
-        //比较器，正大负小
-        if (form.compareTo(to) > 0) {
-            LocalDate tempLocalDate = form;
-            form = to;
-            to = tempLocalDate;
-        }
-        // 加一天
-        long until = form.until(to, ChronoUnit.DAYS) + 1;
-        //左闭右开[0,bound);
-        int days = new Random().nextInt(Math.toIntExact(until));
-        return form.plusDays(days).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-    }
-
-    /**
-     * 验证闰年(true)，平年(false)
+     * 验证：闰年(true)，平年(false)
      */
     private static boolean isLeapYear(int year) {
         return ((year & 3) == 0) && ((year % 100) != 0 || (year % 400) == 0);
