@@ -1,0 +1,196 @@
+.root {
+    -fx-background-color: #f4f4f4;
+}
+
+/*设置tab背景颜色*/
+.tab-pane > *.tab-header-area > *.tab-header-background {
+    -fx-background-color: #f4f4f4;
+}
+
+/*设置tab按钮颜色形状，半圆*/
+.tab {
+    -fx-background-color: #f4f4f4;
+}
+
+.tab:selected {
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #f4f4f4 #f4f4f4 #33aba0 #f4f4f4;
+    -fx-border-width: 0 0 2 0;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: #f4f4f4 #f4f4f4 #33aba0 #f4f4f4;
+}
+
+/*btn四种伪类：1.普通状态2，鼠标hover状态  3.active 点击状态  4.focus 取得焦点状态*/
+/*原始*/
+.btn-primary {
+    -fx-font-weight: bold;
+    -fx-text-fill: #666666;
+    -fx-background-color: #ffffff;
+}
+
+.btn-primary:hover {
+    -fx-border-color: #33aba0;
+    -fx-border-radius: 3px;
+}
+
+.btn-primary:pressed {
+    -fx-text-fill: #333333;
+}
+
+/*默认*/
+.btn {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #009688;
+}
+
+.btn:hover {
+    -fx-background-color: #33aba0;
+}
+
+.btn:pressed {
+    -fx-background-color: #009688;
+}
+
+/*百搭*/
+.btn-normal {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #1e9fff;
+}
+
+.btn-normal:hover {
+    -fx-background-color: #4bb2ff;
+}
+
+.btn-normal:pressed {
+    -fx-background-color: #1e9fff;
+}
+
+/*暖色*/
+.btn-warm {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #ffb800;
+}
+
+.btn-warm:hover {
+    -fx-background-color: #ffc633;
+}
+
+.btn-warm:pressed {
+    -fx-background-color: #ffb800;
+}
+
+/*警告*/
+.btn-danger {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #ff5722;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #ff794e;
+}
+
+.btn-danger:pressed {
+    -fx-background-color: #ff5722;
+}
+
+/*禁用*/
+.btn-disabled {
+    -fx-font-weight: bold;
+    -fx-text-fill: #d2d2d2;
+    -fx-background-color: #fbfbfb;
+    -fx-disable: false;
+}
+
+.com-box {
+    -fx-border-color: #eeeeee;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 3px;
+}
+
+.com-box:hover {
+    -fx-border-color: #5fb878;
+    /*-fx-border-radius: 3px;*/
+}
+
+.radio {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c2c2c2;
+    -fx-border-radius: 50;
+}
+
+.radio:hover {
+    -fx-text-fill: #5fb878;
+    -fx-border-color: #5fb878;
+}
+
+.radio:default {
+    -fx-text-fill: #0000aa;
+}
+
+
+/*文本提示*/
+.my-text {
+    -fx-font-family: "Quicksand";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/*文本框*/
+.my-text-field {
+    -fx-font-family: "Quicksand";
+    -fx-font-size: 24px;
+    /*-fx-padding: 1,1,1,1;*/
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 1;
+    -fx-border-radius: 1;
+    -fx-text-fill: #575757;
+}
+
+.text-area {
+    -fx-background-color: #fbfbfb;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 3px;
+    -fx-border-color: #eeeeee;
+}
+
+.text-field:hover {
+    -fx-border-color: #009688;
+}
+
+.text-field:focused {
+    -fx-border-color: #009688;
+}
+
+.text-area {
+    -fx-border-color: #eeeeee;
+    -fx-border-radius: 3px;
+}
+
+.text-area:hover {
+    -fx-border-color: #009688;
+}
+
+.text-area:focused {
+    -fx-border-color: #009688;
+}

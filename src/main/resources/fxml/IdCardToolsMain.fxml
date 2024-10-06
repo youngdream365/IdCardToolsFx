@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+
+<TabPane fx:id="rootTabPane" maxHeight="500.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity"
+         prefHeight="500.0"
+         prefWidth="500.0" styleClass="root" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.youngdream.idcardtools.controller.MainController">
+    <stylesheets>
+        <URL value="@/css/main.css"/>
+    </stylesheets>
+    <tabs>
+        <Tab text="生成">
+            <content>
+                <fx:include fx:id="creatorTabContent" source="CreatorTabPage.fxml"/>
+            </content>
+        </Tab>
+        <Tab text="解析">
+            <content>
+                <fx:include fx:id="analyzerTabContent" source="AnalyzerTabPage.fxml"/>
+            </content>
+        </Tab>
+        <Tab text="批处理">
+            <content>
+                <fx:include fx:id="batchAnalyzerTabContent" source="BatchTabPage.fxml"/>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

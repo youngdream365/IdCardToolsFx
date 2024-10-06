@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="20.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.youngdream.idcardtools.controller.CreatorController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="16"/>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="28"/>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="28"/>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="28"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="20.0" percentHeight="8.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="20.0" percentHeight="8.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="20.0" percentHeight="8.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="20.0" percentHeight="8.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="20.0" percentHeight="8.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="20.0" percentHeight="60.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <padding>
+        <Insets bottom="10.0" left="20.0" right="20.0" top="15.0"/>
+    </padding>
+    <children>
+        <Label text="地    区" GridPane.rowIndex="0"/>
+        <Label text="性    别" GridPane.rowIndex="1"/>
+        <Label text="数    量" GridPane.rowIndex="2"/>
+        <Label text="日    期" GridPane.rowIndex="3"/>
+
+        <ComboBox fx:id="provinceCb" styleClass="com-box" onAction="#pickProvinceHandle" prefWidth="150.0"
+                  GridPane.columnIndex="1"/>
+        <ComboBox fx:id="cityCb" styleClass="com-box" onAction="#pickCityHandle" prefWidth="150.0"
+                  GridPane.columnIndex="2"/>
+        <ComboBox fx:id="districtCb" styleClass="com-box" prefWidth="150.0" GridPane.columnIndex="3"/>
+
+        <RadioButton fx:id="genderRb" mnemonicParsing="false" selected="true" text="随机" toggleGroup="$genderGroup"
+                     userData="-1" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ToggleGroup fx:id="genderGroup"/>
+        </RadioButton>
+
+        <RadioButton fx:id="genderMaleRb" mnemonicParsing="false" text="男" toggleGroup="$genderGroup" userData="1"
+                     GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <RadioButton fx:id="genderFemaleRb" mnemonicParsing="false" text="女" toggleGroup="$genderGroup" userData="0"
+                     GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        <HBox style="-fx-spacing: 20;-fx-alignment: center" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+            <DatePicker fx:id="birthDpFrom" />
+            <Text> 至 </Text>
+            <DatePicker fx:id="birthDpTo"/>
+        </HBox>
+
+        <Slider fx:id="quantitySlider" onMouseDragged="#changeQuantityHandle" onMousePressed="#changeQuantityHandle"
+                onScroll="#changeQuantityHandle"
+                GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+        <Text fx:id="quantityText" styleClass="my-text" GridPane.columnIndex="3" GridPane.columnSpan="1"
+              GridPane.rowIndex="2"/>
+        <Button fx:id="resetBtn" alignment="CENTER" minWidth="100.0" mnemonicParsing="false"
+                onAction="#resetHandle" styleClass="btn-danger" text="重置" GridPane.halignment="RIGHT"
+                GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        <Button fx:id="copyBtn" alignment="CENTER" minWidth="100.0" mnemonicParsing="false"
+                onAction="#copyHandle" styleClass="btn" text="复制" GridPane.halignment="RIGHT"
+                GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+        <Button fx:id="creatorBtn" alignment="CENTER" minWidth="100.0" mnemonicParsing="false"
+                onAction="#createIdCardsHandle" styleClass="btn-normal" text="生成" GridPane.halignment="RIGHT"
+                GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+
+        <TextArea fx:id="resultArea" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0"
+                  styleClass="text-area" wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="5"/>
+    </children>
+
+</GridPane>
